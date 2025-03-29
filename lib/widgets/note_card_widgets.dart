@@ -14,58 +14,64 @@ final _lightColors = [
 class NoteCardWidgets extends StatelessWidget {
   final Note note;
   final int index;
+
   const NoteCardWidgets({super.key, required this.note, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    final time = DateFormat.yMMMd(). add_jms().format(note.createTime);
+    final time = DateFormat.yMMMd().add_jms().format(note.createTime);
     final minHeight = getMinHeight(index);
-    final Color = _lightColors[index % _lightColors.length];
+    final cardColor = _lightColors[index % _lightColors.length];
+
     return Card(
-      color: Color,
+      color: cardColor,
+      elevation: 6, 
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15), 
+      ),
       child: Container(
         constraints: BoxConstraints(minHeight: minHeight),
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               time,
               style: TextStyle(
-                color: Colors.grey.shade700,
+                color: Colors.grey.shade800,
+                fontSize: 12, 
               ),
             ),
-            const SizedBox(
-              height: 4,
-              ),
+            const SizedBox(height: 6), 
             Text(
               note.title,
+              maxLines: 2, 
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                color: Colors.black,
+                color: Colors.black87,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18, 
               ),
             ),
+            const SizedBox(height: 6), 
           ],
         ),
       ),
     );
   }
-  
+
   double getMinHeight(int index) {
     switch (index % 4) {
       case 0:
-        return 100;
+        return 120;
       case 1:
-        return 150;
+        return 160;
       case 2:
-        return 200;
+        return 220;
       case 3:
-        return 250;
+        return 260;
       default:
-        return 100;
+        return 120;
     }
-  } 
-
+  }
 }

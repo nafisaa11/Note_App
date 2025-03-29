@@ -27,27 +27,58 @@ class NoteFormWidgets extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Row(
+        child: Card(
+          elevation: 4, // Menambahkan efek bayangan agar lebih elegan
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), // Membuat sudut lebih halus
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Switch(value: isImportant, onChanged: onChangedIsImportant),
-                Expanded(
-                  child: Slider(
-                    value: number.toDouble(),
-                    min: 0,
-                    max: 5,
-                    divisions: 5,
-                    onChanged: (value) => onChangedNumber(value.toInt()),
+                Row(
+                  children: [
+                    Text(
+                      'Important:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Switch(
+                      value: isImportant,
+                      onChanged: onChangedIsImportant,
+                      activeColor: Colors.blueAccent,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Priority Level:',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey.shade800,
                   ),
                 ),
+                Slider(
+                  value: number.toDouble(),
+                  min: 0,
+                  max: 5,
+                  divisions: 5,
+                  activeColor: Colors.blueAccent,
+                  onChanged: (value) => onChangedNumber(value.toInt()),
+                ),
+                const SizedBox(height: 12),
+                buildTextField(),
+                const SizedBox(height: 12),
+                buildDescriptionField(),
               ],
             ),
-            const SizedBox(height: 8), 
-            buildTextField(),
-            const SizedBox(height: 8), 
-            buildDescriptionField(),
-          ],
+          ),
         ),
       ),
     );
@@ -58,14 +89,20 @@ class NoteFormWidgets extends StatelessWidget {
       maxLines: 1,
       initialValue: title,
       style: const TextStyle(
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: FontWeight.bold,
+        color: Colors.black87,
       ),
-      decoration: const InputDecoration(
-        hintText: 'Title',
-        border: InputBorder.none,
-        hintStyle: TextStyle(
-          color: Colors.grey,
+      decoration: InputDecoration(
+        labelText: 'Title',
+        labelStyle: TextStyle(color: Colors.blueAccent),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.blueAccent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.blue, width: 2),
         ),
       ),
       validator: (title) {
@@ -77,17 +114,23 @@ class NoteFormWidgets extends StatelessWidget {
 
   Widget buildDescriptionField() {
     return TextFormField(
-      maxLines: null,
+      maxLines: 5,
       initialValue: description,
       style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        color: Colors.black87,
       ),
-      decoration: const InputDecoration(
-        hintText: 'Type something...',
-        border: InputBorder.none,
-        hintStyle: TextStyle(
-          color: Colors.grey,
+      decoration: InputDecoration(
+        labelText: 'Description',
+        labelStyle: TextStyle(color: Colors.blueAccent),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.blueAccent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.blue, width: 2),
         ),
       ),
       validator: (desc) {
